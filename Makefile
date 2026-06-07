@@ -58,6 +58,3 @@ prod\:migrate:
 
 prod\:module:
 	docker compose -f docker-compose.prod.yml exec web python manage.py startapp $(name)
-
-prod\:superu:
-	docker compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
