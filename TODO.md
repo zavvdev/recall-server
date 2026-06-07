@@ -14,9 +14,9 @@
 
 - [ ] See other users decks if public
 
-- [ ] Fork deck if public
+- [ ] Fork deck if public or shared with user
 
-- [ ] Search public decks by topic (English, French for example)
+- [ ] Search public decks grep (English, French for example)
 
 - [ ] Create own decks
 
@@ -32,7 +32,7 @@
 
 # TODOs
 
-- [ ] Database design
+- [x] Database design
 
 - [ ] Setup database models
 
