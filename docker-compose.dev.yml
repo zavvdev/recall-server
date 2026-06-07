@@ -1,0 +1,55 @@
+# Defines all the containers that will run together.
+# Each item under it is a separate container.
+services:
+  db:
+    image: postgres:16
+    # Injects all variables from .env.dev into the container's environment.
+    env_file:
+      - .env.dev
+    # Persists the database data. Without this, every time you restart
+    # the container your database would be wiped.
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    # Maps your local port 5432 to port 5432 inside the container.
+    # Format is host:container. This lets you connect to the database
+    # from your machine using a tool like TablePlus or pgAdmin.
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      # Docker builds from the current directory, so it can find the Dockerfile.
+      context: .
+      # Uses the dev stage from multi-stage Dockerfile, so only dev dependencies are installed.
+      target: dev
+    # Run migration before creating superuser.
+    # Credentials for superuser will be taken from .env.dev and superuser won't be re-created
+    # if already exists.
+    command: >
+        sh -c "python manage.py migrate &&
+          python manage.py shell -c \"from django.contrib.auth import get_user_model;User = get_user_model();User.objects.filter(username='$$DJANGO_SUPERUSER_USERNAME').exists() or User.objects.create_superuser('$$DJANGO_SUPERUSER_USERNAME', '$$DJANGO_SUPERUSER_EMAIL', '$$DJANGO_SUPERUSER_PASSWORD')\" &&
+          python manage.py runserver 0.0.0.0:8000"
+    # Mounts local src/ folder into the container's /app.
+    # This means that local code changes are instantly reflected inside
+    # the container without rebuilding — hot reload works because of this.
+    volumes:
+      - ./src:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.dev
+    # Start the db container before web.
+    # This only waits for the container to start, not for Postgres to be fully ready.
+    depends_on:
+      db:
+        condition: service_healthy  # wait until healthcheck passes
+
+# Declares the named volume at the top level so Docker creates and manages it.
+# Without this declaration Docker would throw an error when it sees postgres_data_dev referenced above.
+volumes:
+  postgres_data_dev:
