@@ -16,7 +16,6 @@ Setup [Python](./PYTHON_SETUP.md) in order to start developing.
 
 4. Run `make dev:start` in order to start all containers.
 
-Admin panel will be accessible on `localhost:8000/admin`. Credentials are inside `.env.dev.example`.
 Database will be accessible on `localhost:5432` with credentials from `.env.dev` file.
 
 Check other commands in `Makefile`.

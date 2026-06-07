@@ -36,10 +36,6 @@ dev\:migrate:
 dev\:module:
 	docker compose -f docker-compose.dev.yml exec web python manage.py startapp $(name)
 
-# Create a new superuser for admin app.
-dev\:superu:
-	docker compose -f docker-compose.dev.yml exec web python manage.py createsuperuser
-
 # ========================
 # PROD
 # ========================
@@ -65,7 +61,3 @@ prod\:module:
 
 prod\:superu:
 	docker compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
-
-# Collect all static files into static folder.
-prod\:statics:
-	docker compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input

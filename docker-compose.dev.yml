@@ -30,10 +30,7 @@ services:
     # Run migration before creating superuser.
     # Credentials for superuser will be taken from .env.dev and superuser won't be re-created
     # if already exists.
-    command: >
-        sh -c "python manage.py migrate &&
-          python manage.py shell -c \"from django.contrib.auth import get_user_model;User = get_user_model();User.objects.filter(username='$$DJANGO_SUPERUSER_USERNAME').exists() or User.objects.create_superuser('$$DJANGO_SUPERUSER_USERNAME', '$$DJANGO_SUPERUSER_EMAIL', '$$DJANGO_SUPERUSER_PASSWORD')\" &&
-          python manage.py runserver 0.0.0.0:8000"
+    command: "python manage.py runserver 0.0.0.0:8000"
     # Mounts local src/ folder into the container's /app.
     # This means that local code changes are instantly reflected inside
     # the container without rebuilding — hot reload works because of this.
