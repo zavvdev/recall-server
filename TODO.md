@@ -34,6 +34,8 @@
 
 - [x] Database design
 
+- [ ] Add custom auth backend for User model in order to handle login with either username or email.
+
 - [ ] Setup database models
 
 - [ ] Basic token-based auth

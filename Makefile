@@ -1,12 +1,15 @@
+DEV_COMPOSE = docker compose -f docker-compose.dev.yml
+PROD_COMPOSE = docker compose -f docker-compose.prod.yml
+
 # Creates virtual env folder
 setup:
 	python -m venv .venv
 
 lint:
-	docker compose -f docker-compose.dev.yml exec web ruff check . --fix
+	$(DEV_COMPOSE) exec web ruff check . --fix
 
 format:
-	docker compose -f docker-compose.dev.yml exec web ruff format .
+	$(DEV_COMPOSE) exec web ruff format .
 
 # ========================
 # DEV
@@ -14,47 +17,54 @@ format:
 
 # Build images without starting anything.
 dev\:build:
-	docker compose -f docker-compose.dev.yml build
+	$(DEV_COMPOSE) build
 
 # Start all containers.
 dev\:start:
-	docker compose -f docker-compose.dev.yml up
+	$(DEV_COMPOSE) up
 
 # Stops and removes the containers but keeps the volumes.
 dev\:stop:
-	docker compose -f docker-compose.dev.yml down
+	$(DEV_COMPOSE) down
 
 # Stops and removes the containers and volumes.
 dev\:nuke:
-	docker compose -f docker-compose.dev.yml down -v
+	$(DEV_COMPOSE) down -v
 
-# Run migrations
+# Create a migration for specific app.
+dev\:make-migration:
+	$(DEV_COMPOSE) exec web python manage.py makemigrations $(app)
+
+# Run all migrations.
 dev\:migrate:
-	docker compose -f docker-compose.dev.yml exec web python manage.py migrate
+	$(DEV_COMPOSE) exec web python manage.py migrate
 
-# Create new module (app)
+# Create new module (app).
 dev\:module:
-	docker compose -f docker-compose.dev.yml exec web python manage.py startapp $(name)
+	$(DEV_COMPOSE) exec web python manage.py startapp $(name)
 
 # ========================
 # PROD
 # ========================
 
 prod\:build:
-	docker compose -f docker-compose.prod.yml build
+	$(PROD_COMPOSE) build
 
 # Start in detached mode.
 prod\:start:
-	docker compose -f docker-compose.prod.yml up -d
+	$(PROD_COMPOSE) up -d
 
 prod\:stop:
-	docker compose -f docker-compose.prod.yml down
+	$(PROD_COMPOSE) down
 
 prod\:nuke:
-	docker compose -f docker-compose.prod.yml down -v
+	$(PROD_COMPOSE) down -v
+
+prod\:make-migration:
+	$(PROD_COMPOSE) exec web python manage.py makemigrations $(app)
 
 prod\:migrate:
-	docker compose -f docker-compose.prod.yml exec web python manage.py migrate
+	$(PROD_COMPOSE) exec web python manage.py migrate
 
 prod\:module:
-	docker compose -f docker-compose.prod.yml exec web python manage.py startapp $(name)
+	$(PROD_COMPOSE) exec web python manage.py startapp $(name)
