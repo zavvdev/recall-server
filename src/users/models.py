@@ -27,6 +27,17 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+    
+    def get_by_natural_key(self, username):
+        # Normalize email before lookup in DB so that varying case
+        # in the domain doesn't block authentication.
+        #
+        # ** unpacks dictionary into key=value args;
+        # kwargs = {"email": email}
+        # self.get(**kwargs)
+        # becomes self.get(email=email)
+        email = self.normalize_email(username)
+        return self.get(**{self.model.USERNAME_FIELD: email})
 
 
 # This model needs to be assigned to AUTH_USER_MODEL variable inside config/settings/base.py
