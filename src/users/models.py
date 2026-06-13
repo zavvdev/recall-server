@@ -1,7 +1,11 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import Q
 
 from shared.models import BaseModel
+
+username_validator = RegexValidator(regex=r"^[a-zA-Z0-9_]+$", message="invalid_username")
 
 
 # Manager is a layer between a model and the database query logic.
@@ -27,7 +31,7 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def get_by_natural_key(self, username):
         # Normalize email before lookup in DB so that varying case
         # in the domain doesn't block authentication.
@@ -57,9 +61,12 @@ class User(AbstractBaseUser, BaseModel):
     # form validation will allow entry of an empty value. If a field has blank=False,
     # the field will be required.
 
-    username = models.CharField(unique=True, max_length=20)
+    username = models.CharField(unique=True, max_length=20, validators=[username_validator])
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=30)
+
+    # Remove last_login field that is inherited from AbstractBaseUser model.
+    last_login = None
 
     # Password is already provided by AbstractBaseUser as well as its hashing.
 
@@ -85,6 +92,15 @@ class User(AbstractBaseUser, BaseModel):
 
     # Do not rename it since internal auth logic expects this name.
     objects = UserManager()
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                # Disallow using @ in usernames at the database level.
+                condition=~Q(username__contains="@"),
+                name="username_no_at_sign",
+            )
+        ]
 
     def __str__(self):
         return self.email

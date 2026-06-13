@@ -52,6 +52,11 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # Custom backend for authenticating users with either email or username.
+    "users.backends.AuthWithEmailOrUsernameBackend",
+]
+
 ROOT_URLCONF = "config.urls"
 
 WSGI_APPLICATION = "config.wsgi.application"
