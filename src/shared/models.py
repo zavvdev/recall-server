@@ -4,7 +4,7 @@ from django.db import models
 
 
 # Base model that sets up some fields in order to not duplicate it for each model.
-class BaseModel(models.Model):
+class ModelBase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # This field will be set to now only once when record is created.
     created_at = models.DateTimeField(auto_now_add=True)

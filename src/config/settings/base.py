@@ -42,10 +42,21 @@ AUTH_USER_MODEL = "users.User"
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "rest_framework",
     # Custom apps
     "shared",
     "users",
+    "authentication",
 ]
+
+REST_FRAMEWORK = {
+    # Use JWT by default.
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    # Custom global exception handler.
+    "EXCEPTION_HANDLER": "shared.exception_handler.custom_exception_handler",
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

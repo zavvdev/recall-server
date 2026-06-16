@@ -1,11 +1,10 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import Q
 
-from shared.models import BaseModel
-
-username_validator = RegexValidator(regex=r"^[a-zA-Z0-9_]+$", message="invalid_username")
+from shared.constants import USER_NAME_MAX_LEN, USER_USERNAME_MAX_LEN
+from shared.models import ModelBase
+from shared.validators import user_username_validator
 
 
 # Manager is a layer between a model and the database query logic.
@@ -47,7 +46,7 @@ class UserManager(BaseUserManager):
 # This model needs to be assigned to AUTH_USER_MODEL variable inside config/settings/base.py
 # since we overriding default Django model for authentication. It has to be done before
 # running migration.
-class User(AbstractBaseUser, BaseModel):
+class User(AbstractBaseUser, ModelBase):
     # These fields are required since we didn't specify
     # blank=True or null=True
     #
@@ -61,9 +60,11 @@ class User(AbstractBaseUser, BaseModel):
     # form validation will allow entry of an empty value. If a field has blank=False,
     # the field will be required.
 
-    username = models.CharField(unique=True, max_length=20, validators=[username_validator])
+    username = models.CharField(
+        unique=True, max_length=USER_USERNAME_MAX_LEN, validators=[user_username_validator]
+    )
     email = models.EmailField(unique=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=USER_NAME_MAX_LEN)
 
     # Remove last_login field that is inherited from AbstractBaseUser model.
     last_login = None
@@ -98,7 +99,7 @@ class User(AbstractBaseUser, BaseModel):
             models.CheckConstraint(
                 # Disallow using @ in usernames at the database level.
                 condition=~Q(username__contains="@"),
-                name="username_no_at_sign",
+                name="users_user_username_no_at_sign",
             )
         ]
 
