@@ -13,7 +13,14 @@ from .serializers import LoginSerializer
 class TokenRefreshView(JwtTokenRefreshView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
-        return api_response(message=Messages.OK, data=response.data, status=response.status_code)
+        if response.status_code < 300:
+            return api_response(data=response.data, status=response.status_code)
+        else:
+            return api_response(
+                data=response.data,
+                message=Messages.UNEXPECTED_ERROR,
+                status=response.status_code,
+            )
 
 
 class LoginView(APIView):
@@ -32,12 +39,13 @@ class LoginView(APIView):
 
         if user is None:
             return api_response(
-                Messages.AUTH_INVALID_CREDENTIALS, data=None, status=status.HTTP_400_BAD_REQUEST
+                message=Messages.AUTH_INVALID_CREDENTIALS,
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         refresh = RefreshToken.for_user(user)
         return api_response(
-            Messages.AUTH_LOGIN_SUCCESS,
+            message=Messages.AUTH_LOGIN_SUCCESS,
             data={
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
