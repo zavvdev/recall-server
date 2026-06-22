@@ -12,6 +12,9 @@ format:
 	$(DEV_COMPOSE) exec web ruff format .
 
 # Exec into django container shell
+# >>> from django.contrib.auth import get_user_model
+# >>> User = get_user_model()
+# >>> User.object.create_user(username="john1", email="john1@mail.com", password="12345678")
 shell:
 	docker exec -it $(name) python manage.py shell
 

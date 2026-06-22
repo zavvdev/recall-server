@@ -36,23 +36,25 @@
 
 - [x] Add custom auth backend for User model in order to handle login with either username or email.
 
+- [ ] Update /refresh response to match standardized shape
+
+- [ ] Add /register route
+
 - [ ] Setup database models
 
 - [x] Basic token-based auth
 
 - [ ] User profile
+  - [ ] Username/name
 
-   - [ ] Username/name
+  - [ ] Email
 
-   - [ ] Email
+  - [ ] Password
 
-   - [ ] Password
+  - [ ] Language
 
-   - [ ] Language
-
-   - [ ] Profile type (public/private)
- 
-   - [ ] Theme
+  - [ ] Profile type (public/private)
+  - [ ] Theme
 
 - [ ] Deck model
 
