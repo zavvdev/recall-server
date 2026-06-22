@@ -50,8 +50,8 @@ dev\:migrate:
 dev\:module:
 	$(DEV_COMPOSE) exec web python manage.py startapp $(name)
 
-shell:
-	docker exec -it $(name) python manage.py shell
+dev\:test:
+	$(DEV_COMPOSE) exec web python manage.py test
 
 # ========================
 # PROD

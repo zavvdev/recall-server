@@ -17,5 +17,4 @@ class Messages(StrEnum):
 
     # authentication
     AUTH_INVALID_CREDENTIALS = "auth_invalid_credentials"
-    AUTH_LOGIN_SUCCESS = "auth_login_success"
     AUTH_USER_CREATION_FAILED = "auth_user_creation_failed"
