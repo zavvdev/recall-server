@@ -2,7 +2,7 @@
 
 - [ ] Third party auth
 
-- [ ] Email auth
+- [x] Email auth
 
 - [ ] Profile settings
 
@@ -38,7 +38,7 @@
 
 - [ ] Setup database models
 
-- [ ] Basic token-based auth
+- [x] Basic token-based auth
 
 - [ ] User profile
 

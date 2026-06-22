@@ -11,6 +11,10 @@ lint:
 format:
 	$(DEV_COMPOSE) exec web ruff format .
 
+# Exec into django container shell
+shell:
+	docker exec -it $(name) python manage.py shell
+
 # ========================
 # DEV
 # ========================
@@ -42,6 +46,9 @@ dev\:migrate:
 # Create new module (app).
 dev\:module:
 	$(DEV_COMPOSE) exec web python manage.py startapp $(name)
+
+shell:
+	docker exec -it $(name) python manage.py shell
 
 # ========================
 # PROD
