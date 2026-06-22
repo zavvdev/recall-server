@@ -13,7 +13,6 @@ def user_username_validator(value):
         return value
     except DjangoValidationError:
         pass
-
     # fallback to username rules
     RegexValidator(regex=r"^[a-zA-Z_][a-zA-Z0-9_]*$")(value)
     return value

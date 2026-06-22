@@ -38,13 +38,16 @@
 
 - [x] Update /refresh response to match standardized shape
 
-- [ ] Add /register route
+- [x] Add /register route
+
+- [ ] Add tests for auth
 
 - [ ] Setup database models
 
 - [x] Basic token-based auth
 
 - [ ] User profile
+
   - [ ] Username/name
 
   - [ ] Email
@@ -54,6 +57,7 @@
   - [ ] Language
 
   - [ ] Profile type (public/private)
+
   - [ ] Theme
 
 - [ ] Deck model

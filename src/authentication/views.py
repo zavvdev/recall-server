@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -7,7 +8,7 @@ from rest_framework_simplejwt.views import TokenRefreshView as JwtTokenRefreshVi
 from shared.messages import Messages
 from shared.responses import api_response
 
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, RegisterSerializer
 
 
 class TokenRefreshView(JwtTokenRefreshView):
@@ -23,11 +24,25 @@ class TokenRefreshView(JwtTokenRefreshView):
             )
 
 
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            # This will call "create" method from RegisterSerializer.
+            serializer.save()
+            return api_response(status=status.HTTP_201_CREATED)
+        except IntegrityError:
+            return api_response(
+                message=Messages.AUTH_USER_CREATION_FAILED,
+                status=status.HTTP_409_CONFLICT,
+            )
+
+
 class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         # Calling Django's authenticate(). This loops through AUTHENTICATION_BACKENDS,
         # hits our AuthWithEmailOrUsernameBackend, and returns either a User
         # instance or None.
@@ -36,13 +51,11 @@ class LoginView(APIView):
             username=serializer.validated_data["username"],
             password=serializer.validated_data["password"],
         )
-
         if user is None:
             return api_response(
                 message=Messages.AUTH_INVALID_CREDENTIALS,
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
         refresh = RefreshToken.for_user(user)
         return api_response(
             message=Messages.AUTH_LOGIN_SUCCESS,
