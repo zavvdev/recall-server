@@ -4,6 +4,7 @@ from enum import StrEnum
 # Messages for api responses.
 class Messages(StrEnum):
     # common
+    OK = "ok"
     UNEXPECTED_ERROR = "unexpected_error"
     VALIDATION_ERROR = "validation_error"
     INVALID = "invalid"

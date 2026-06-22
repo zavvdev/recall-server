@@ -36,7 +36,7 @@
 
 - [x] Add custom auth backend for User model in order to handle login with either username or email.
 
-- [ ] Update /refresh response to match standardized shape
+- [x] Update /refresh response to match standardized shape
 
 - [ ] Add /register route
 
