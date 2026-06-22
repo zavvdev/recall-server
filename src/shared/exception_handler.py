@@ -55,11 +55,12 @@ def custom_exception_handler(exc, context):
     if response is not None:
         if isinstance(exc, ValidationError):
             response.data = build_api_response_envelope(
-                Messages.VALIDATION_ERROR, _genericize(exc.detail)
+                data=_normalize_validation_err(exc.detail),
+                message=Messages.VALIDATION_ERROR,
             )
             return response
 
-        response.data = build_api_response_envelope(_map_known_exception(exc))
+        response.data = build_api_response_envelope(message=_map_known_err_message(exc))
         return response
 
     # Reached only if drf_exception_handler returned None — meaning this is an exception
@@ -67,11 +68,11 @@ def custom_exception_handler(exc, context):
     # logger.exception logs at ERROR level and automatically includes the traceback
     # (that's what distinguishes it from logger.error), so we can debug it later.
     # This would otherwise have propagated up and become Django's HTML 500 page.
-    logger.exception("Unhandled exception", exc_info=exc)
+    logger.exception("unhandled_exception", exc_info=exc)
 
     # Fallback error.
     return Response(
-        build_api_response_envelope(Messages.UNEXPECTED_ERROR),
+        build_api_response_envelope(message=Messages.UNEXPECTED_ERROR),
         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
     )
 
@@ -80,9 +81,9 @@ def custom_exception_handler(exc, context):
 # This recurses into each field's value — written generically (recursing into dicts)
 # so it also handles nested serializers, where a field's value could itself be a dict
 # of sub-fields rather than a list of errors.
-def _genericize(detail):
+def _normalize_validation_err(detail):
     if isinstance(detail, dict):
-        return {key: _genericize(value) for key, value in detail.items()}
+        return {key: _normalize_validation_err(value) for key, value in detail.items()}
     if isinstance(detail, list):
         # For each field, DRF gives a list of ErrorDetail objects (a field can fail
         # multiple validators at once). We only want the first one, so index [0] and map
@@ -96,7 +97,7 @@ def _map_error_code(err):
     return _CODE_TO_MESSAGE.get(code, Messages.INVALID)
 
 
-def _map_known_exception(exc):
+def _map_known_err_message(exc):
     if isinstance(exc, NotAuthenticated):
         return Messages.NOT_AUTHENTICATED
     if isinstance(exc, PermissionDenied):
