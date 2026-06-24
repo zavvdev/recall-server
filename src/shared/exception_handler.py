@@ -10,6 +10,7 @@ from rest_framework.response import Response
 # DRF's default exception handler. We're not replacing it outright — we call it first,
 # then reshape what it produces. This is the function DRF normally points EXCEPTION_HANDLER to.
 from rest_framework.views import exception_handler as drf_exception_handler
+from rest_framework_simplejwt.exceptions import InvalidToken
 
 from shared.messages import Messages
 from shared.responses import build_api_response_envelope
@@ -58,6 +59,10 @@ def custom_exception_handler(exc, context):
                 data=_normalize_validation_err(exc.detail),
                 message=Messages.VALIDATION_ERROR,
             )
+            return response
+
+        if isinstance(exc, InvalidToken):
+            response.data = build_api_response_envelope(message=Messages.NOT_AUTHENTICATED)
             return response
 
         response.data = build_api_response_envelope(message=_map_known_err_message(exc))
