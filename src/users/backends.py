@@ -19,14 +19,16 @@ User = get_user_model()
 
 # Don't forget to wire it up in settings.py to AUTHENTICATION_BACKENDS
 class AuthWithEmailOrUsernameBackend(ModelBackend):
-    # The method Django calls when authenticate() is invoked anywhere in your code.
-    # The signature is a Django contract — request is the current HTTP request,
-    # username and password are the credentials passed in. **kwargs absorbs any extra
-    # credentials other backends might pass (e.g. a token).
+    # The method Django calls when authenticate() is invoked anywhere
+    # in your code. The signature is a Django contract — request is
+    # the current HTTP request, username and password are the credentials
+    # passed in. **kwargs absorbs any extra credentials other backends might
+    # pass (e.g. a token).
     def authenticate(self, request, username=None, password=None, **kwargs):
-        # Guard clause. If either credential is missing, bail out immediately and
-        # return None — meaning "this backend can't authenticate this request."
-        # Django then moves on to the next backend in AUTHENTICATION_BACKENDS.
+        # Guard clause. If either credential is missing, bail out
+        # immediately and return None — meaning "this backend can't
+        # authenticate this request." Django then moves on to the next
+        # backend in AUTHENTICATION_BACKENDS.
         if username is None or password is None:
             return None
 
@@ -43,17 +45,18 @@ class AuthWithEmailOrUsernameBackend(ModelBackend):
         except User.DoesNotExist:
             return None
 
-        # check_password(password) — method from AbstractBaseUser. It hashes the provided
-        # password and compares it to the stored hash. Never compares raw passwords.
-        # self.user_can_authenticate(user) — inherited from ModelBackend. Checks that the
-        # user's is_active field is True. Blocks soft-deleted or banned accounts.
+        # check_password(password) — method from AbstractBaseUser.
+        # It hashes the provided password and compares it to the stored hash.
+        # Never compares raw passwords. self.user_can_authenticate(user) —
+        # inherited from ModelBackend. Checks that the user's is_active field
+        # is True. Blocks soft-deleted or banned accounts.
         if user.check_password(password) and self.user_can_authenticate(user):
             return user
 
         return None
 
     def user_can_authenticate(self, user):
-        # Always allow to authenticate for now since we don't have is_active field
-        # in our User model. If we ever want to have "inactive" functionality for users
-        # we can add logic here.
+        # Always allow to authenticate for now since we don't have
+        # is_active field in our User model. If we ever want to have
+        # "inactive" functionality for users we can add logic here.
         return True

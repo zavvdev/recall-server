@@ -11,13 +11,19 @@ User = get_user_model()
 class AuthRefreshTests(APITestCase):
     def test_refresh_token_should_refresh(self):
         User.objects.create_user(
-            username="john", email="john@example.com", password="strongpass123", name="John"
+            username="john",
+            email="john@example.com",
+            password="strongpass123",
+            name="John",
         )
         login_resp = self.client.post(
-            reverse("auth_login"), {"username": "john", "password": "strongpass123"}
+            reverse("auth_login"),
+            {"username": "john", "password": "strongpass123"},
         )
         refresh_token = login_resp.data["data"]["refresh"]
-        response = self.client.post(reverse("auth_refresh"), {"refresh": refresh_token})
+        response = self.client.post(
+            reverse("auth_refresh"), {"refresh": refresh_token}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data["data"])
 

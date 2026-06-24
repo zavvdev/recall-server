@@ -9,4 +9,6 @@ def build_api_response_envelope(data=None, message=Messages.OK):
 
 # Standard api response shape.
 def api_response(data=None, message=Messages.OK, status=200):
-    return Response(build_api_response_envelope(data=data, message=message), status=status)
+    return Response(
+        build_api_response_envelope(data=data, message=message), status=status
+    )

@@ -30,10 +30,11 @@ DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-# Some kinds of projects may have authentication requirements for which Django’s
-# built-in User model is not always appropriate. For instance, on some sites it
-# makes more sense to use an email address as your identification token instead
-# of a username. Django allows you to override the default user model by providing
+# Some kinds of projects may have authentication requirements for
+# which Django’s built-in User model is not always appropriate.
+# For instance, on some sites it makes more sense to use an email
+# address as your identification token instead of a username.
+# Django allows you to override the default user model by providing
 # a value for the AUTH_USER_MODEL setting that references a custom model.
 AUTH_USER_MODEL = "users.User"
 
@@ -93,16 +94,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",  # noqa: E501
     },
 ]
 

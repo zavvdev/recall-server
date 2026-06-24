@@ -43,25 +43,28 @@ class UserManager(BaseUserManager):
         return self.get(**{self.model.USERNAME_FIELD: email})
 
 
-# This model needs to be assigned to AUTH_USER_MODEL variable inside config/settings/base.py
-# since we overriding default Django model for authentication. It has to be done before
-# running migration.
+# This model needs to be assigned to AUTH_USER_MODEL variable inside
+# config/settings/base.py since we overriding default Django model for
+# authentication. It has to be done before running migration.
 class User(AbstractBaseUser, ModelBase):
     # These fields are required since we didn't specify
     # blank=True or null=True
     #
     # null
-    # If True, Django will store empty values as NULL in the database. Default is False.
+    # If True, Django will store empty values as NULL in the database.
+    # Default is False.
     #
     # blank
     # If True, the field is allowed to be blank. Default is False.
-    # Note that this is different than null. null is purely database-related,
-    # whereas blank is validation-related. If a field has blank=True,
-    # form validation will allow entry of an empty value. If a field has blank=False,
-    # the field will be required.
+    # Note that this is different than null. null is purely
+    # database-related, whereas blank is validation-related. If a field
+    # has blank=True, form validation will allow entry of an empty value.
+    # If a field has blank=False, the field will be required.
 
     username = models.CharField(
-        unique=True, max_length=USER_USERNAME_MAX_LEN, validators=[user_username_validator]
+        unique=True,
+        max_length=USER_USERNAME_MAX_LEN,
+        validators=[user_username_validator],
     )
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=USER_NAME_MAX_LEN)
@@ -71,24 +74,26 @@ class User(AbstractBaseUser, ModelBase):
 
     # Password is already provided by AbstractBaseUser as well as its hashing.
 
-    # A string describing the name of the field on the user model that is used as
-    # the unique identifier. This will usually be a username of some kind, but it
-    # can also be an email address, or any other unique identifier. The field must
-    # be unique (e.g. have unique=True set in its definition), unless you use a custom
-    # authentication backend that can support non-unique usernames.
-    # We still need to provide USERNAME_FIELD even if we add our custom authentication
-    # backend for handling fields which can be used for authentication.
+    # A string describing the name of the field on the user model that is
+    # used as the unique identifier. This will usually be a username of
+    # some kind, but it can also be an email address, or any other unique
+    # identifier. The field must be unique (e.g. have unique=True set in
+    # its definition), unless you use a custom authentication backend that
+    # can support non-unique usernames. We still need to provide USERNAME_FIELD
+    # even if we add our custom authentication backend for handling fields
+    # which can be used for authentication.
     USERNAME_FIELD = "email"
 
-    # A list of the field names that will be prompted for when creating a user via
-    # the createsuperuser management command. The user will be prompted to supply
-    # a value for each of these fields. It must include any field for which blank
-    # is False or undefined and may include additional fields you want prompted
-    # for when a user is created interactively. REQUIRED_FIELDS has no effect in
-    # other parts of Django, like creating a user in the admin.
-    # So, we're leaving this field empty since we don't need admin app.
-    # But it still needs to be included because otherwise it will be pulled from
-    # default AbstractBaseUser implementation and will cause an error.
+    # A list of the field names that will be prompted for when creating
+    # a user via the createsuperuser management command. The user will be
+    # prompted to supply a value for each of these fields. It must include
+    # any field for which blank is False or undefined and may include
+    # additional fields you want prompted for when a user is created
+    # interactively. REQUIRED_FIELDS has no effect in other parts of Django,
+    # like creating a user in the admin. So, we're leaving this field empty
+    # since we don't need admin app. But it still needs to be included
+    # because otherwise it will be pulled from default AbstractBaseUser
+    # implementation and will cause an error.
     REQUIRED_FIELDS = []
 
     # Do not rename it since internal auth logic expects this name.
