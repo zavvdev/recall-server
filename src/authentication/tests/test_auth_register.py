@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from shared.messages import Messages
+from user_profiles.models import UserProfile
 
 User = get_user_model()
 
@@ -20,7 +21,9 @@ class AuthRegisterTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["message"], Messages.OK)
         self.assertEqual(response.data["data"], None)
-        self.assertEqual(User.objects.count(), 1)
+        user = User.objects.get(username="john")
+        self.assertEqual(user.profile.user_id, user.id)
+        self.assertEqual(UserProfile.objects.count(), 1)
 
     def test_register_should_reject_if_already_created(self):
         payload = {

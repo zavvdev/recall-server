@@ -38,7 +38,7 @@
     
   - [ ] Add routes
 
-  - [ ] Create profile when user is created
+  - [x] Create profile when user is created
 
   - [ ] Tests
 

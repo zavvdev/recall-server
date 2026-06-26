@@ -62,17 +62,17 @@ class UserProfile(ModelBase):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                condition=~Q(
+                condition=Q(
                     visibility__in=[v.value for v in ProfileVisibility]
                 ),
                 name="visibility_valid",
             ),
             models.CheckConstraint(
-                condition=~Q(language__in=[v.value for v in Lang]),
+                condition=Q(language__in=[v.value for v in Lang]),
                 name="language_valid",
             ),
             models.CheckConstraint(
-                condition=~Q(theme__in=[v.value for v in Theme]),
+                condition=Q(theme__in=[v.value for v in Theme]),
                 name="theme_valid",
             ),
         ]

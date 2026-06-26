@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.db import transaction
 from rest_framework import serializers, status
 
 from shared.constants import USER_NAME_MAX_LEN
 from shared.exceptions import AppException
 from shared.messages import Messages
 from shared.validators import user_password_validator, user_username_validator
+from user_profiles.models import UserProfile
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -38,8 +40,11 @@ class RegisterSerializer(serializers.Serializer):
     # serializer = UserSerializer(instance=user, data=request.data)
     # so when we call serializer.save() it calls "update" instead of "create".
     def create(self, validated_data):
-        User = get_user_model()
-        return User.objects.create_user(**validated_data)
+        with transaction.atomic():
+            User = get_user_model()
+            user = User.objects.create_user(**validated_data)
+            UserProfile.objects.create(user=user)
+            return user
 
 
 class LoginSerializer(serializers.Serializer):
