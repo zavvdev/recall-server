@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     "rest_framework",
     # Custom apps
     "shared",
-    "users",
     "authentication",
+    "users",
+    "user_profiles",
 ]
 
 REST_FRAMEWORK = {

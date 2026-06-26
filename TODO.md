@@ -1,8 +1,6 @@
 # Core Features
 
-- [ ] Third party auth
-
-- [x] Email auth
+- [x] Email/username auth
 
 - [ ] Profile settings
 
@@ -30,40 +28,30 @@
 
 - [ ] Statistics
 
+- [ ] Third party auth
+
 # TODOs
 
-- [x] Database design
-
-- [x] Add custom auth backend for User model in order to handle login with either username or email.
-
-- [x] Update /refresh response to match standardized shape
-
-- [x] Add /register route
-
-- [ ] Add tests for auth
-
-- [ ] Setup database models
-
-- [x] Basic token-based auth
-
 - [ ] User profile
+    
+  - [x] Setup model
+    
+  - [ ] Add routes
 
-  - [ ] Username/name
+  - [ ] Create profile when user is created
 
-  - [ ] Email
-
-  - [ ] Password
-
-  - [ ] Language
-
-  - [ ] Profile type (public/private)
-
-  - [ ] Theme
+  - [ ] Tests
 
 - [ ] Deck model
 
+  - [ ] Tests
+
 - [ ] Card model
 
+  - [ ] Tests
+
 - [ ] Implement SM2 algorithm
+  
+  - [ ] Tests
 
 ...
