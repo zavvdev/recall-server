@@ -36,7 +36,7 @@
     
   - [x] Setup model
     
-  - [ ] Add routes
+  - [ ] Add routes (GET, PUT)
 
   - [x] Create profile when user is created
 
