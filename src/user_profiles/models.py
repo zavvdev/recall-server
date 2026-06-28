@@ -12,11 +12,11 @@ class ProfileVisibility(StrEnum):
     PUBLIC = "public"
 
 
-class Lang(StrEnum):
-    ENG = "eng"
+class ProfileLang(StrEnum):
+    EN = "en"
 
 
-class Theme(StrEnum):
+class ProfileTheme(StrEnum):
     DARK = "dark"
     LIGHT = "light"
 
@@ -49,14 +49,14 @@ class UserProfile(ModelBase):
 
     language = models.CharField(
         max_length=3,
-        choices=[(v.value, v.value) for v in Lang],
-        default=Lang.ENG,
+        choices=[(v.value, v.value) for v in ProfileLang],
+        default=ProfileLang.EN,
     )
 
     theme = models.CharField(
         max_length=5,
-        choices=[(v.value, v.value) for v in Theme],
-        default=Theme.LIGHT,
+        choices=[(v.value, v.value) for v in ProfileTheme],
+        default=ProfileTheme.LIGHT,
     )
 
     class Meta:
@@ -68,11 +68,11 @@ class UserProfile(ModelBase):
                 name="visibility_valid",
             ),
             models.CheckConstraint(
-                condition=Q(language__in=[v.value for v in Lang]),
+                condition=Q(language__in=[v.value for v in ProfileLang]),
                 name="language_valid",
             ),
             models.CheckConstraint(
-                condition=Q(theme__in=[v.value for v in Theme]),
+                condition=Q(theme__in=[v.value for v in ProfileTheme]),
                 name="theme_valid",
             ),
         ]

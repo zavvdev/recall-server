@@ -26,6 +26,7 @@ class AuthRefreshTests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data["data"])
+        self.assertIn("refresh", response.data["data"])
 
     def test_refresh_token_should_reject_if_invalid(self):
         response = self.client.post(reverse("auth_refresh"), {"refresh": "123"})

@@ -32,15 +32,15 @@
 
 # TODOs
 
-- [ ] User profile
+- [x] User profile
     
   - [x] Setup model
     
-  - [ ] Add routes (GET, PUT)
+  - [x] Add routes (GET, PUT)
 
   - [x] Create profile when user is created
 
-  - [ ] Tests
+  - [x] Tests
 
 - [ ] Deck model
 

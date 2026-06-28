@@ -1,0 +1,75 @@
+{
+  "info": {
+    "_postman_id": "ca33aa5e-21ee-45d2-a2f8-42ea82200474",
+    "name": "Profile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37575400"
+  },
+  "item": [
+    {
+      "name": "Profile",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/profile/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "profile",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Profile",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"visibility\": \"public\",\n    \"language\": \"en\",\n    \"theme\": \"dark\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{API_ENDPOINT}}/profile/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "profile",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

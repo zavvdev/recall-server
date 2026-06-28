@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
     # Custom apps
     "shared",
     "authentication",
@@ -69,6 +71,24 @@ AUTHENTICATION_BACKENDS = [
     # Custom backend for authenticating users with either email or username.
     "users.backends.AuthWithEmailOrUsernameBackend",
 ]
+
+SIMPLE_JWT = {
+    # How long the access token is valid.
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=120),
+    # How long the refresh token is valid. Longer lifetimes mean users stay
+    # logged in longer but increase risk if a token is stolen.
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    # Issue a new refresh token every time /api/token/refresh/ is called.
+    # This extends the session while the user is active.
+    "ROTATE_REFRESH_TOKENS": True,
+    # Blacklist the old refresh token after rotation. Requires
+    # 'rest_framework_simplejwt.token_blacklist' in INSTALLED_APPS.
+    "BLACKLIST_AFTER_ROTATION": True,
+    # Hashing algorithm used to sign the token.
+    "ALGORITHM": "HS256",
+    # The prefix in the Authorization header: "Bearer <token>"
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 ROOT_URLCONF = "config.urls"
 
