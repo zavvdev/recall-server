@@ -4,13 +4,14 @@ from rest_framework import status
 from shared.messages import Messages
 from shared.models import Visibility
 from shared.tests.base import BaseAPITestCase
+from shared.url_names import UrlName
 from user_profiles.models import ProfileLang, ProfileTheme
 
 
 class UserProfileViewTest(BaseAPITestCase):
     def test_retrieves_user_profile(self):
         self.login()
-        response = self.client.get(reverse("user_profile"))
+        response = self.client.get(reverse(UrlName.USER_PROFILE))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["message"], Messages.OK)
         self.assertEqual(
@@ -21,7 +22,7 @@ class UserProfileViewTest(BaseAPITestCase):
 
     def test_updates_user_profile(self):
         self.login()
-        response = self.client.get(reverse("user_profile"))
+        response = self.client.get(reverse(UrlName.USER_PROFILE))
 
         self.assertEqual(
             response.data["data"]["visibility"], Visibility.PRIVATE
@@ -30,7 +31,7 @@ class UserProfileViewTest(BaseAPITestCase):
         self.assertEqual(response.data["data"]["theme"], ProfileTheme.LIGHT)
 
         self.client.put(
-            reverse("user_profile"),
+            reverse(UrlName.USER_PROFILE),
             {
                 "visibility": Visibility.PUBLIC,
                 "language": ProfileLang.EN,
@@ -38,7 +39,7 @@ class UserProfileViewTest(BaseAPITestCase):
             },
         )
 
-        updated = self.client.get(reverse("user_profile"))
+        updated = self.client.get(reverse(UrlName.USER_PROFILE))
 
         self.assertEqual(updated.data["data"]["visibility"], Visibility.PUBLIC)
         self.assertEqual(updated.data["data"]["language"], ProfileLang.EN)

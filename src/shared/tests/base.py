@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
+from shared.url_names import UrlName
+
 User = get_user_model()
 
 
@@ -17,7 +19,7 @@ class BaseAPITestCase(APITestCase):
         )
 
         response = self.client.post(
-            reverse("auth_login"),
+            reverse(UrlName.AUTH_LOGIN),
             {
                 "username": user.email,
                 "password": password,

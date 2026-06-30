@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from shared.messages import Messages
+from shared.url_names import UrlName
 from user_profiles.models import UserProfile
 
 User = get_user_model()
@@ -17,7 +18,7 @@ class AuthRegisterTests(APITestCase):
             "password": "strongpass123",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["message"], Messages.OK)
         self.assertEqual(response.data["data"], None)
@@ -32,8 +33,8 @@ class AuthRegisterTests(APITestCase):
             "password": "strongpass123",
             "name": "John",
         }
-        self.client.post(reverse("auth_register"), payload)
-        response = self.client.post(reverse("auth_register"), payload)
+        self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
         self.assertEqual(
             response.data["message"], Messages.AUTH_USER_CREATION_FAILED
@@ -48,7 +49,7 @@ class AuthRegisterTests(APITestCase):
             "password": "strongpass123",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["username"], Messages.INVALID)
@@ -61,7 +62,7 @@ class AuthRegisterTests(APITestCase):
             "password": "123",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["password"], Messages.INVALID)
@@ -73,7 +74,7 @@ class AuthRegisterTests(APITestCase):
             "password": "12345678",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["username"], Messages.REQUIRED)
@@ -85,7 +86,7 @@ class AuthRegisterTests(APITestCase):
             "password": "12345678",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["email"], Messages.REQUIRED)
@@ -97,7 +98,7 @@ class AuthRegisterTests(APITestCase):
             "email": "john@example.com",
             "name": "John",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["password"], Messages.REQUIRED)
@@ -109,7 +110,7 @@ class AuthRegisterTests(APITestCase):
             "email": "john@example.com",
             "password": "12345678",
         }
-        response = self.client.post(reverse("auth_register"), payload)
+        response = self.client.post(reverse(UrlName.AUTH_REGISTER), payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["name"], Messages.REQUIRED)

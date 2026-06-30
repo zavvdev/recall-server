@@ -2,9 +2,9 @@
 
 - [x] Email/username auth
 
-- [ ] Profile settings
+- [x] Profile settings
 
-- [ ] Profile visibility
+- [x] Profile visibility
 
 - [ ] Follow other users
 
