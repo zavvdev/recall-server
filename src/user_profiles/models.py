@@ -4,12 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
-from shared.models import ModelBase
-
-
-class ProfileVisibility(StrEnum):
-    PRIVATE = "private"
-    PUBLIC = "public"
+from shared.models import ModelBase, Visibility
 
 
 class ProfileLang(StrEnum):
@@ -43,8 +38,8 @@ class UserProfile(ModelBase):
         max_length=10,
         # First value from tuple is being used by Django for validation.
         # The second one is just a label. We could use v.name.
-        choices=[(v.value, v.value) for v in ProfileVisibility],
-        default=ProfileVisibility.PRIVATE,
+        choices=[(v.value, v.value) for v in Visibility],
+        default=Visibility.PRIVATE,
     )
 
     language = models.CharField(
@@ -62,9 +57,7 @@ class UserProfile(ModelBase):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                condition=Q(
-                    visibility__in=[v.value for v in ProfileVisibility]
-                ),
+                condition=Q(visibility__in=[v.value for v in Visibility]),
                 name="visibility_valid",
             ),
             models.CheckConstraint(

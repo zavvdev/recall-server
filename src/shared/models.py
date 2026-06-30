@@ -1,6 +1,12 @@
 import uuid
+from enum import StrEnum
 
 from django.db import models
+
+
+class Visibility(StrEnum):
+    PRIVATE = "private"
+    PUBLIC = "public"
 
 
 # Base model that sets up some fields in order to not duplicate
