@@ -7,7 +7,6 @@ from django.conf import settings
 from django.db import migrations, models
 
 import shared.models
-import user_profiles.models
 
 
 class Migration(migrations.Migration):
@@ -19,7 +18,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="UserProfile",
+            name="Deck",
             fields=[
                 (
                     "id",
@@ -32,6 +31,7 @@ class Migration(migrations.Migration):
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=25)),
                 (
                     "visibility",
                     models.CharField(
@@ -41,26 +41,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "language",
-                    models.CharField(
-                        choices=[("en", "en")],
-                        default=user_profiles.models.ProfileLang["EN"],
-                        max_length=2,
-                    ),
-                ),
-                (
-                    "theme",
-                    models.CharField(
-                        choices=[("dark", "dark"), ("light", "light")],
-                        default=user_profiles.models.ProfileTheme["LIGHT"],
-                        max_length=5,
-                    ),
-                ),
-                (
                     "user",
                     models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="profile",
+                        related_name="deck",
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
@@ -71,16 +55,8 @@ class Migration(migrations.Migration):
                         condition=models.Q(
                             ("visibility__in", ["private", "public"])
                         ),
-                        name="profile_visibility_valid",
-                    ),
-                    models.CheckConstraint(
-                        condition=models.Q(("language__in", ["en"])),
-                        name="profile_language_valid",
-                    ),
-                    models.CheckConstraint(
-                        condition=models.Q(("theme__in", ["dark", "light"])),
-                        name="profile_theme_valid",
-                    ),
+                        name="deck_visibility_valid",
+                    )
                 ],
             },
         ),

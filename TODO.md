@@ -42,7 +42,11 @@
 
   - [x] Tests
 
-- [ ] Deck model
+- [ ] Decks
+
+  - [x] Setup model
+
+  - [ ] Add routes (GET ONE/ALL, POST, PUT, DELETE)
 
   - [ ] Tests
 

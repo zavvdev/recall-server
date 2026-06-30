@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
+from shared.constants import LANGUAGE_MAX_LEN, THEME_MAX_LEN, VISIBILITY_MAX_LEN
+from shared.constraints import ConstraintName
 from shared.models import ModelBase, Visibility
 
 
@@ -20,7 +22,7 @@ class UserProfile(ModelBase):
     # Create one-to-one relationship between user and profile.
     # Field has name "user", not user_id or profile_user.
     # Django automatically creates the underlying database column
-    # user_id, while out Python code accesses it as profile.user
+    # user_id, while our Python code accesses it as profile.user
     user = models.OneToOneField(
         # We use this instead of directly importing User model.
         # This works whether we’re using Django’s built-in user
@@ -35,7 +37,7 @@ class UserProfile(ModelBase):
     )
 
     visibility = models.CharField(
-        max_length=10,
+        max_length=VISIBILITY_MAX_LEN,
         # First value from tuple is being used by Django for validation.
         # The second one is just a label. We could use v.name.
         choices=[(v.value, v.value) for v in Visibility],
@@ -43,13 +45,13 @@ class UserProfile(ModelBase):
     )
 
     language = models.CharField(
-        max_length=3,
+        max_length=LANGUAGE_MAX_LEN,
         choices=[(v.value, v.value) for v in ProfileLang],
         default=ProfileLang.EN,
     )
 
     theme = models.CharField(
-        max_length=5,
+        max_length=THEME_MAX_LEN,
         choices=[(v.value, v.value) for v in ProfileTheme],
         default=ProfileTheme.LIGHT,
     )
@@ -58,14 +60,14 @@ class UserProfile(ModelBase):
         constraints = [
             models.CheckConstraint(
                 condition=Q(visibility__in=[v.value for v in Visibility]),
-                name="visibility_valid",
+                name=ConstraintName.PROFILE_VISIBILITY_VALID,
             ),
             models.CheckConstraint(
                 condition=Q(language__in=[v.value for v in ProfileLang]),
-                name="language_valid",
+                name=ConstraintName.PROFILE_LANGUAGE_VALID,
             ),
             models.CheckConstraint(
                 condition=Q(theme__in=[v.value for v in ProfileTheme]),
-                name="theme_valid",
+                name=ConstraintName.PROFILE_THEME_VALID,
             ),
         ]

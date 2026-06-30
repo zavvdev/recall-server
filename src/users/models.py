@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Q
 
 from shared.constants import USER_NAME_MAX_LEN, USER_USERNAME_MAX_LEN
+from shared.constraints import ConstraintName
 from shared.models import ModelBase
 from shared.validators import user_username_validator
 
@@ -104,7 +105,7 @@ class User(AbstractBaseUser, ModelBase):
             models.CheckConstraint(
                 # Disallow using @ in usernames at the database level.
                 condition=~Q(username__contains="@"),
-                name="users_user_username_no_at_sign",
+                name=ConstraintName.USER_USERNAME_NO_AT_SIGN,
             )
         ]
 

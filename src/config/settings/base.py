@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "authentication",
     "users",
     "user_profiles",
+    "decks",
 ]
 
 REST_FRAMEWORK = {
