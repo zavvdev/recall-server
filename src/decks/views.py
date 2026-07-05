@@ -10,17 +10,19 @@ class DeckListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        pass
-
-    def post(self, request):
-        serializer = DeckSerializer(
-            data=request.data,
-            context={"user": request.user},
+        decks = request.user.decks.all()
+        # manu=True - serialize a list of decks
+        # instead of one.
+        serializer = DeckSerializer(decks, many=True)
+        return api_response(
+            data=serializer.data,
+            status=status.HTTP_200_OK,
         )
 
+    def post(self, request):
+        serializer = DeckSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-
+        serializer.save(user=request.user)
         return api_response(
             status=status.HTTP_201_CREATED,
         )

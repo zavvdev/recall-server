@@ -8,6 +8,25 @@ from shared.url_names import UrlName
 
 
 class UserProfileViewTest(BaseAPITestCase):
+    def test_get_retrieves_decks_for_user(self):
+        self.login()
+
+        self.client.post(
+            reverse(UrlName.DECK_LIST),
+            {
+                "name": "Test deck",
+            },
+        )
+
+        response = self.client.get(
+            reverse(UrlName.DECK_LIST),
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["message"], Messages.OK)
+        self.assertEqual(len(response.data["data"]), 1)
+        self.assertEqual(response.data["data"][0]["name"], "Test deck")
+
     def test_post_creates_deck_with_default_visibility(self):
         user = self.login()
 
