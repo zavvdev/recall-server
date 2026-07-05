@@ -28,7 +28,8 @@ class DeckListView(APIView):
         )
 
     def delete(self, request):
-        pass
+        request.user.decks.all().delete()
+        return api_response()
 
 
 class DeckDetailView(APIView):
