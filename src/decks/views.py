@@ -1,5 +1,9 @@
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+
+from decks.serializers import DeckSerializer
+from shared.responses import api_response
 
 
 class DeckListView(APIView):
@@ -9,7 +13,17 @@ class DeckListView(APIView):
         pass
 
     def post(self, request):
-        pass
+        serializer = DeckSerializer(
+            data=request.data,
+            context={"user": request.user},
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return api_response(
+            status=status.HTTP_201_CREATED,
+        )
 
     def delete(self, request):
         pass

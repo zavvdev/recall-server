@@ -8,21 +8,14 @@ from shared.models import ModelBase, Visibility
 
 
 class Deck(ModelBase):
-    # Create one-to-one relationship between user and deck.
+    # Create one-to-many relationship between user and deck.
     # Field has name "user", not user_id. Django automatically
     # creates the underlying database column user_id, while our
     # Python code accesses it as deck.user
-    user = models.OneToOneField(
-        # We use this instead of directly importing User model.
-        # This works whether we’re using Django’s built-in user
-        # model or a custom one.
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        # If associated user model gets deleted, then deck
-        # is deleted automatically.
         on_delete=models.CASCADE,
-        # Name of the field that is used to access deck from user:
-        # "user.deck".
-        related_name="deck",
+        related_name="decks",
     )
 
     name = models.CharField(max_length=DECK_NAME_MAX_LEN)
