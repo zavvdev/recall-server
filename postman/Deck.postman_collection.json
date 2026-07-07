@@ -1,0 +1,199 @@
+{
+  "info": {
+    "_postman_id": "554eed5c-a768-4d1d-9f42-a93462fb347c",
+    "name": "Deck",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37575400"
+  },
+  "item": [
+    {
+      "name": "Decks",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deck",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/3a504363-ab49-4ccb-b980-b9671a68379d/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            "3a504363-ab49-4ccb-b980-b9671a68379d",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deck",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Deck 1\",\n    \"visibility\": \"public\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deck",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Updated2\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/869afa86-3f70-402e-9963-34a12a729ccd/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            "869afa86-3f70-402e-9963-34a12a729ccd",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deck",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/869afa86-3f70-402e-9963-34a12a729ccd/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            "869afa86-3f70-402e-9963-34a12a729ccd",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Decks",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

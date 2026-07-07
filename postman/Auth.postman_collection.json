@@ -7,6 +7,34 @@
   },
   "item": [
     {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"12345678\",\n    \"name\": \"John Doe\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{API_ENDPOINT}}/auth/register/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "auth",
+            "register",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Login",
       "event": [
         {
@@ -89,34 +117,6 @@
           "path": [
             "auth",
             "refresh",
-            ""
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Register",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"username\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"12345678\",\n    \"name\": \"John Doe\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{API_ENDPOINT}}/auth/register/",
-          "host": [
-            "{{API_ENDPOINT}}"
-          ],
-          "path": [
-            "auth",
-            "register",
             ""
           ]
         }
