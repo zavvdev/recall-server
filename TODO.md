@@ -24,7 +24,7 @@
 
 - [ ] Card CRUD
 
-- [ ] Deck CRUD
+- [x] Deck CRUD
 
 - [ ] Statistics
 
@@ -42,13 +42,13 @@
 
   - [x] Tests
 
-- [ ] Decks
+- [x] Decks
 
   - [x] Setup model
 
-  - [ ] Add routes (GET ONE/ALL, POST, PUT, DELETE)
+  - [x] Add routes (GET ONE/ALL, POST, PUT, DELETE)
 
-  - [ ] Tests
+  - [x] Tests
 
 - [ ] Card model
 

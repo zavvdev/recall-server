@@ -7,7 +7,7 @@ from shared.tests.base import BaseAPITestCase
 from shared.url_names import UrlName
 
 
-class UserProfileViewTest(BaseAPITestCase):
+class DeckListViewTest(BaseAPITestCase):
     def test_get_retrieves_decks_for_user(self):
         self.login()
         self.client.post(
@@ -24,7 +24,6 @@ class UserProfileViewTest(BaseAPITestCase):
         self.assertEqual(len(response.data["data"]), 1)
         self.assertEqual(response.data["data"][0]["name"], "Test deck")
 
-
     def test_post_creates_deck_with_default_visibility(self):
         user = self.login()
         self.assertEqual(len(user.decks.all()), 0)
@@ -38,7 +37,6 @@ class UserProfileViewTest(BaseAPITestCase):
         deck = user.decks.all()[0]
         self.assertEqual(deck.visibility, Visibility.PRIVATE)
 
-
     def test_post_creates_deck_with_custom_visibility(self):
         user = self.login()
         self.client.post(
@@ -51,6 +49,18 @@ class UserProfileViewTest(BaseAPITestCase):
         deck = user.decks.all()[0]
         self.assertEqual(deck.visibility, Visibility.PUBLIC)
 
+    def test_post_returns_back_created_deck(self):
+        self.login()
+        res = self.client.post(
+            reverse(UrlName.DECK_LIST),
+            {
+                "name": "Test deck",
+                "visibility": Visibility.PUBLIC,
+            },
+        )
+        self.assertEqual(res.data["data"]["name"], "Test deck")
+        self.assertEqual(res.data["data"]["visibility"], Visibility.PUBLIC)
+        self.assertIn("id", res.data["data"])
 
     def test_post_requires_name(self):
         self.login()
@@ -63,7 +73,6 @@ class UserProfileViewTest(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(response.data["data"]["name"], Messages.REQUIRED)
-
 
     def test_delete_deletes_all_user_decks(self):
         user = self.login()

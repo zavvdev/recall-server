@@ -30,7 +30,7 @@ class UserProfileViewTest(BaseAPITestCase):
         self.assertEqual(response.data["data"]["language"], ProfileLang.EN)
         self.assertEqual(response.data["data"]["theme"], ProfileTheme.LIGHT)
 
-        self.client.put(
+        self.client.patch(
             reverse(UrlName.USER_PROFILE),
             {
                 "visibility": Visibility.PUBLIC,

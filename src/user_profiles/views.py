@@ -19,7 +19,7 @@ class UserProfileView(APIView):
             data=serializer.data,
         )
 
-    def put(self, request):
+    def patch(self, request):
         profile = request.user.profile
         # Since we linked our UserProfile model to serializer, when we
         # pass data into it, it makes serializer to run in write/update

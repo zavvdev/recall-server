@@ -6,5 +6,5 @@ from .views import DeckDetailView, DeckListView
 
 urlpatterns = [
     path("", DeckListView.as_view(), name=UrlName.DECK_LIST),
-    path("<int:id>/", DeckDetailView.as_view(), name=UrlName.DECK_DETAIL),
+    path("<uuid:pk>/", DeckDetailView.as_view(), name=UrlName.DECK_DETAIL),
 ]
