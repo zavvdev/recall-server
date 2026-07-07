@@ -6,6 +6,8 @@
 
 - [x] Profile visibility
 
+- [x] Create own decks
+
 - [ ] Follow other users
 
 - [ ] Share decks (either public for all or for specific user)
@@ -16,15 +18,9 @@
 
 - [ ] Search public decks grep (English, French for example)
 
-- [ ] Create own decks
-
 - [ ] Add cards into decks (basic or reverse)
 
 - [ ] SM2 algorithm
-
-- [ ] Card CRUD
-
-- [x] Deck CRUD
 
 - [ ] Statistics
 
@@ -50,12 +46,30 @@
 
   - [x] Tests
 
-- [ ] Card model
+- [ ] Cards
+
+  - [ ] Setup model
+
+  - [ ] Add routes
 
   - [ ] Tests
 
-- [ ] Implement SM2 algorithm
+- [ ] Deck forks
+
+  - [ ] Setup model
+
+  - [ ] Add routes (fork (hard/soft), unfork)
+
+  - [ ] Tests
+
+- [ ] Card reviews
+
+  - [ ] Implement SM2 algorithm
   
   - [ ] Tests
 
-...
+- [ ] Followers
+
+  - [ ] Setup model
+
+  - [ ] Tests
