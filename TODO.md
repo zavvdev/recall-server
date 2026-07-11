@@ -70,10 +70,8 @@
  
  - [x] Route for decks/:id/cards
 
-  - [ ] Tests
+  - [x] Tests
   
- - [ ] Add tests for validating cards for authenticated user
-
 - [ ] Deck forks
 
   - [ ] Setup model
