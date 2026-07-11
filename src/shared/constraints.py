@@ -9,3 +9,5 @@ class ConstraintName(StrEnum):
     PROFILE_THEME_VALID = "profile_theme_valid"
 
     DECK_VISIBILITY_VALID = "deck_visibility_valid"
+
+    CARD_KIND_VALID = "card_kind_valid"

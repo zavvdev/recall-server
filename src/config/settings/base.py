@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "users",
     "user_profiles",
     "decks",
+    "cards",
 ]
 
 REST_FRAMEWORK = {

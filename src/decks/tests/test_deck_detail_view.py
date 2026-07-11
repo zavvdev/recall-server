@@ -35,7 +35,6 @@ class DeckDetailViewTest(BaseAPITestCase):
             create_res.data["data"]["visibility"],
         )
 
-
     def test_get_returns_404_if_not_found(self):
         self.login()
         get_res = self.client.get(
@@ -47,7 +46,6 @@ class DeckDetailViewTest(BaseAPITestCase):
         self.assertEqual(get_res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(get_res.data["message"], Messages.NOT_FOUND)
         self.assertEqual(get_res.data["data"], None)
-
 
     def test_patch_updates_deck_by_id(self):
         user = self.login()
@@ -63,12 +61,11 @@ class DeckDetailViewTest(BaseAPITestCase):
                 UrlName.DECK_DETAIL,
                 kwargs={"pk": created_deck_id},
             ),
-            {"name": "Updated", "visibility": Visibility.PUBLIC}
+            {"name": "Updated", "visibility": Visibility.PUBLIC},
         )
         deck = user.decks.get(pk=created_deck_id)
         self.assertEqual(deck.name, "Updated")
         self.assertEqual(deck.visibility, Visibility.PUBLIC)
-
 
     def test_patch_returns_404_if_not_found(self):
         self.login()
@@ -77,12 +74,11 @@ class DeckDetailViewTest(BaseAPITestCase):
                 UrlName.DECK_DETAIL,
                 kwargs={"pk": "869afa86-3f70-402e-9963-34a12a729ccd"},
             ),
-            {"name": "Updated", "visibility": Visibility.PUBLIC}
+            {"name": "Updated", "visibility": Visibility.PUBLIC},
         )
         self.assertEqual(patch_res.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(patch_res.data["message"], Messages.NOT_FOUND)
         self.assertEqual(patch_res.data["data"], None)
-
 
     def test_delete_deletes_deck_by_id(self):
         user = self.login()
@@ -102,7 +98,6 @@ class DeckDetailViewTest(BaseAPITestCase):
         )
         self.assertEqual(delete_res.data["message"], Messages.OK)
         self.assertEqual(len(user.decks.all()), 0)
-
 
     def test_delete_returns_404_if_not_found(self):
         self.login()
