@@ -75,7 +75,16 @@ class DeckListViewTest(BaseAPITestCase):
         self.assertEqual(response.data["data"]["name"], Messages.REQUIRED)
 
     def test_delete_deletes_all_user_decks(self):
-        user = self.login()
+        user_1 = self.register_user(username="other")
+        self.login_user(username="other")
+        self.client.post(
+            reverse(UrlName.DECK_LIST),
+            {
+                "name": "Test 1 other",
+            },
+        )
+        self.assertEqual(len(user_1.decks.all()), 1)
+        user_2 = self.login()
         self.client.post(
             reverse(UrlName.DECK_LIST),
             {
@@ -88,10 +97,11 @@ class DeckListViewTest(BaseAPITestCase):
                 "name": "Test 2",
             },
         )
-        self.assertEqual(len(user.decks.all()), 2)
+        self.assertEqual(len(user_2.decks.all()), 2)
         response = self.client.delete(
             reverse(UrlName.DECK_LIST),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["message"], Messages.OK)
-        self.assertEqual(len(user.decks.all()), 0)
+        self.assertEqual(len(user_2.decks.all()), 0)
+        self.assertEqual(len(user_1.decks.all()), 1)
