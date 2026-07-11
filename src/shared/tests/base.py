@@ -27,7 +27,26 @@ class BaseAPITestCase(APITestCase):
         )
 
         token = response.data["data"]["access"]
-
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
-
         return user
+
+    def register_user(self, username):
+        user = User.objects.create_user(
+            username=username,
+            email=f"{username}@test.com",
+            name=f"Test ${username}",
+            password="12345678",
+        )
+        return user
+
+    def login_user(self, username):
+        response = self.client.post(
+            reverse(UrlName.AUTH_LOGIN),
+            {
+                "username": username,
+                "password": "12345678",
+            },
+        )
+
+        token = response.data["data"]["access"]
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")

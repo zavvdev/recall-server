@@ -45,8 +45,6 @@
   - [x] Add routes (GET ONE/ALL, POST, PUT, DELETE)
 
   - [x] Tests
-  
-  - [ ] Add tests for validating decks for authenticated user
 
 - [ ] Cards
 
