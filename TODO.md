@@ -45,18 +45,36 @@
   - [x] Add routes (GET ONE/ALL, POST, PUT, DELETE)
 
   - [x] Tests
+  
+  - [ ] Add tests for validating decks for authenticated user
 
 - [ ] Cards
 
   - [x] Setup model
 
-  - [ ] Add routes (POST, PATCH, DELETE, GET)
+  - [ ] Add routes
 
-   - [x] Route for decks/:id/cards
+   - [x] POST
+   
+    - [ ] Tests
 
-     - [ ] Tests
+   - [ ] PATCH
+   
+    - [ ] Tests
+
+   - [ ] DELETE
+   
+    - [ ] Tests
+
+   - [ ] GET
+   
+    - [ ] Tests
+ 
+ - [x] Route for decks/:id/cards
 
   - [ ] Tests
+  
+ - [ ] Add tests for validating cards for authenticated user
 
 - [ ] Deck forks
 

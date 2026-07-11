@@ -194,6 +194,36 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Cards",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{API_ENDPOINT}}/decks/3a504363-ab49-4ccb-b980-b9671a68379d/cards/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "decks",
+            "3a504363-ab49-4ccb-b980-b9671a68379d",
+            "cards",
+            ""
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

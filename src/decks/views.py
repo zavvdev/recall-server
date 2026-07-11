@@ -85,5 +85,6 @@ class DeckCardsView(APIView):
             )
         except request.user.decks.model.DoesNotExist:
             return api_response(
-                message=Messages.NOT_FOUND, status=status.HTTP_404_NOT_FOUND
+                message=Messages.DECK_NOT_FOUND,
+                status=status.HTTP_404_NOT_FOUND,
             )

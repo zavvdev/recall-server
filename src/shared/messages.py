@@ -18,3 +18,6 @@ class Messages(StrEnum):
     # authentication
     AUTH_INVALID_CREDENTIALS = "auth_invalid_credentials"
     AUTH_USER_CREATION_FAILED = "auth_user_creation_failed"
+
+    # decks
+    DECK_NOT_FOUND = "deck_not_found"

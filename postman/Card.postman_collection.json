@@ -1,0 +1,47 @@
+{
+  "info": {
+    "_postman_id": "275989c3-c096-450a-9142-b811021b2ddd",
+    "name": "Card",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37575400"
+  },
+  "item": [
+    {
+      "name": "Card",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ACCESS_TOKEN}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kind\": \"basic\",\n    \"front\": \"Hello\",\n    \"back\": \"Czesc\",\n    \"deck\": \"3a504363-ab49-4ccb-b980-b9671a68379d\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{API_ENDPOINT}}/cards/",
+          "host": [
+            "{{API_ENDPOINT}}"
+          ],
+          "path": [
+            "cards",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -21,4 +21,5 @@ urlpatterns = [
     path("auth/", include("authentication.urls")),
     path("profile/", include("user_profiles.urls")),
     path("decks/", include("decks.urls")),
+    path("cards/", include("cards.urls")),
 ]
