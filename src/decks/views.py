@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
+from cards.serializers import CardSerializer
 from decks.serializers import DeckSerializer
 from shared.messages import Messages
 from shared.responses import api_response
@@ -64,6 +65,24 @@ class DeckDetailView(APIView):
             deck = request.user.decks.get(pk=pk)
             deck.delete()
             return api_response()
+        except request.user.decks.model.DoesNotExist:
+            return api_response(
+                message=Messages.NOT_FOUND, status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class DeckCardsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            deck = request.user.decks.get(pk=pk)
+            cards = deck.cards.all()
+            serializer = CardSerializer(cards, many=True)
+            return api_response(
+                data=serializer.data,
+                status=status.HTTP_200_OK,
+            )
         except request.user.decks.model.DoesNotExist:
             return api_response(
                 message=Messages.NOT_FOUND, status=status.HTTP_404_NOT_FOUND

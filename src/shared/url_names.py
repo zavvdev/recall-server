@@ -8,5 +8,6 @@ class UrlName(StrEnum):
 
     DECK_LIST = "deck_list"
     DECK_DETAIL = "deck_detail"
+    DECK_CARDS = "deck_cards"
 
     USER_PROFILE = "user_profile"

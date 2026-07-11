@@ -48,9 +48,13 @@
 
 - [ ] Cards
 
-  - [ ] Setup model
+  - [x] Setup model
 
-  - [ ] Add routes
+  - [ ] Add routes (POST, PATCH, DELETE, GET)
+
+   - [x] Route for decks/:id/cards
+
+     - [ ] Tests
 
   - [ ] Tests
 
