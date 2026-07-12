@@ -13,3 +13,4 @@ class UrlName(StrEnum):
     USER_PROFILE = "user_profile"
 
     CARD_LIST = "card_list"
+    CARD_DETAIL = "card_detail"

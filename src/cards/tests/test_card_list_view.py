@@ -131,4 +131,3 @@ class CardListViewTest(BaseAPITestCase):
         )
         self.assertEqual(res.data["message"], Messages.VALIDATION_ERROR)
         self.assertEqual(res.data["data"]["deck"], Messages.REQUIRED)
-
