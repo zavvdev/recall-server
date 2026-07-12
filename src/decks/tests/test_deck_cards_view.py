@@ -17,7 +17,7 @@ class DeckCardsViewTest(BaseAPITestCase):
             },
         )
         self.client.post(
-            reverse(UrlName.CARD),
+            reverse(UrlName.CARD_LIST),
             {
                 "kind": CardKind.BASIC,
                 "front": "1",
@@ -55,7 +55,7 @@ class DeckCardsViewTest(BaseAPITestCase):
             },
         )
         self.client.post(
-            reverse(UrlName.CARD),
+            reverse(UrlName.CARD_LIST),
             {
                 "kind": CardKind.BASIC,
                 "front": "1",

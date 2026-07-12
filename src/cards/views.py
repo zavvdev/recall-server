@@ -7,10 +7,12 @@ from shared.messages import Messages
 from shared.responses import api_response
 
 
-class CardView(APIView):
+class CardListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        serializer = CardSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         try:
             deck = request.user.decks.get(pk=request.data["deck"])
         except request.user.decks.model.DoesNotExist:
@@ -18,8 +20,6 @@ class CardView(APIView):
                 message=Messages.DECK_NOT_FOUND,
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = CardSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         serializer.save(deck=deck)
         return api_response(
             status=status.HTTP_201_CREATED,

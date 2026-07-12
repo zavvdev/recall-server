@@ -54,7 +54,7 @@
 
    - [x] POST
    
-    - [ ] Tests
+    - [x] Tests
 
    - [ ] PATCH
    
